@@ -3,9 +3,22 @@ from django.db import models
 # Create your models here.
 
 class ECG_model(models.Model):
-    user_name = models.CharField(max_length= 200, null= True)
-    signal_x = models.CharField(max_length= 200, null= True)
-    signla_y = models.CharField(max_length=200, null = True)
+    amp = models.FloatField()
+    data = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["pk"]
 
     def __str__(self):
-        return self.user_name
+        return f"{self.amp} "
+
+
+class ECG_models(models.Model):
+    amp = models.FloatField()
+    data = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["pk"]
+
+    def __str__(self):
+        return f"{self.amp} "
