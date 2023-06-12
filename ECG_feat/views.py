@@ -2,6 +2,9 @@ import re
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
 from .forms import ECG_form
+from django.utils import timezone
+from datetime import datetime, timedelta
+from .models import ECG_models
 # Create your views here.
 
 def index(request):
@@ -26,28 +29,13 @@ def grafico_hora(request):
     #max = []
     #avg = []
     ultima_hora = ahora-timedelta(hours=1)
-    queryset = T_Vs_t.objects.filter(FECHA__range=(ultima_hora,ahora))
+    queryset = ECG_models.objects.all()
     #queryset = T_Vs_t.objects.all()[:1440] #1440 pts son las ultimas 24 hrs, considerando que la info se registra cada un min
 
     for maumau in queryset:
-        data.append(maumau.TEMPERATURA)
-        labels.append(str(maumau.FECHA.strftime("%Y-%m-%d %H:%M")))
-        min= queryset.aggregate(Min("TEMPERATURA"))
-        min = str(min)
-        min = min[21:25]
-        avg= queryset.aggregate(Avg("TEMPERATURA"))
-        avg = str(avg)
-        avg = avg[21:25]
-        max= queryset.aggregate(Max("TEMPERATURA"))
-        max = str(max)
-        max = max[21:25]
-        count= queryset.count()
-        opcount = 60
-
-
-
-
-    return render(request, 'grafico.html', {'labels': labels,'data': data, "min":min, "avg": avg, "max":max, "titulo":titulo, "count": count, "opcount": opcount})
+        data.append(maumau.amp)
+        labels.append(str(maumau.data.strftime("%Y-%m-%d %H:%M")))
+    return render(request, 'grafico.html', {'labels': labels,'data': data})
 
 
 ################################
