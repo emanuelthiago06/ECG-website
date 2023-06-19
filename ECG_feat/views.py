@@ -8,7 +8,7 @@ from .models import ECG_models
 # Create your views here.
 
 def index(request):
-    return HttpResponse("First page")
+    return render(request, "index.html")
 
 def create_view(request):
     context = {}
@@ -20,6 +20,11 @@ def create_view(request):
     return render(request, 'create_view.html', context)
 
 def grafico_hora(request):
+
+    if request.method == 'POST' and 'clean_database' in request.POST:
+        # Delete all objects in the model
+        ECG_models.objects.all().delete()
+        return render(request, 'grafico.html', {'message': 'Database cleaned successfully.'})
 
     ahora= datetime.now()
     data = []

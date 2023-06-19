@@ -1,12 +1,20 @@
-<p>Os valores recebidos até então foram de :</p>
-<p></p>
-{%for amp in data%}
-    <li>{{amp}}</li>
-    <li>.</li>
-{% endfor %}
-<h2>Visualizador do ECG</h2>
+{% extends 'base.html' %}
+{% block title %}Grafico do ECG{% endblock title %}
+
+
 
 {% block content %}
+
+<h2 >Visualizador do ECG</h2>
+
+<form method="post">
+  {% csrf_token %}
+  <button type="submit" name="clean_database">Clean Database</button>
+</form>
+
+{% if message %}
+  <p>{{ message }}</p>
+{% endif %}
 
 <div id="container" style="width: 90%;">
     <canvas id="line"></canvas>
