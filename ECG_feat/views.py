@@ -21,6 +21,11 @@ def create_view(request):
 
 def grafico_hora(request):
 
+    if request.method == 'POST' and 'clean_database' in request.POST:
+        # Delete all objects in the model
+        ECG_models.objects.all().delete()
+        return render(request, 'grafico.html', {'message': 'Database cleaned successfully.'})
+
     ahora= datetime.now()
     data = []
     labels =[]
@@ -62,8 +67,10 @@ def Temp_serializer_agregar_data(request):
 
     elif request.method == 'POST':
         data = JSONParser().parse(request)
-        serializer = Temp_serializer(data=data)
+        print(data)
+        serializer = Temp_serializer(data = data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=201)
+        print(serializer.errors)
         return JsonResponse(serializer.errors, status=400)
