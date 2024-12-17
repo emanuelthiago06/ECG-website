@@ -1,0 +1,154 @@
+
+
+/* GLOBAL VARIABLES */
+
+:root {
+  --font-family: "Open Sans", sans-serif;
+
+  /* Colors: */
+  --mainColor: #52b2e2;
+  --patamarButton: #2e84f6;
+  --patamarButtonHover: #00459f;
+
+  --containerBoxShadow: rgba(0, 0, 0, 0.1);
+  --containerBoxShadowBefore: rgba(0, 0, 0, 0.2);
+  --black: #303030;
+
+  --orangeButton: #005eff;
+  --orangeButtonHover: #ff8e24;
+
+  --labelColor: #868585;
+  --disabledButton: #ebebeb;
+  --greyInputBorder: #d0d0d0;
+  --bodyColor: #f4f4f4;
+  --white: #ffffff;
+
+  --errorInfo: #e80101;
+  --errorModal:  #c10606;
+
+  --greenButton: #3BBF43;
+  --greenButtonHover: #62e76b;
+
+  --redButton: #c10606;
+  --redButtonHover: #e80101;
+
+  
+  /* Fonts Size */
+  --font-size-base: 12pt;
+  --font-size-small: 10pt;
+  --font-size-medium: 16pt;
+
+  --font-size-large: 18pt; 
+  --font-size-x-large: 20pt; 
+  --font-size-xx-large: 22pt; 
+  --font-size-xxx-large: 48pt;
+}
+
+/* BODY */
+
+body {
+  font-family: var(--font-family);
+  margin: 0;
+
+  background-color: var(--bodyColor);
+}
+
+button,
+input[type="text"],
+select {
+  font-family: var(--font-family);
+}
+
+/* HEADER */
+
+.dpr-logo {
+  width: 50px;
+  height: 28px;
+  margin-right: 20px;
+}
+
+
+.icon-menu-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.icon-menu {
+  margin-left: 20pt;
+}
+
+.icon-menu:hover {
+  cursor: pointer;
+}
+
+.header-app {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  justify-content: space-between;
+
+  height: 63px;
+  background-color: var(--mainColor);
+
+  padding-left: 50px;
+  padding-right: 35px;
+}
+
+.header-app div:first-child {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.header-app div p {
+  color: rgb(255, 255, 255);
+  font-size: var(--font-size-x-large);
+}
+
+/* Common styles */
+
+.empty_button {
+  background-color: var(--white);
+  border: 2px solid var(--greyInputBorder);
+  border-radius: 5pt;
+
+  margin-right: 18px;
+  width: 165px;
+  height: 38px;
+
+  cursor: pointer;
+}
+
+
+.hidden {
+  display: none !important;
+}
+
+
+
+
+
+
+.nav-menu{
+  width: 70%;
+  padding: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  list-style-type: none;
+  background-color: #333;
+}
+
+
+.nav-item{
+  text-decoration: none;
+}
+
+.nav-link{
+  text-decoration: none;
+  color: #fff;
+
+}

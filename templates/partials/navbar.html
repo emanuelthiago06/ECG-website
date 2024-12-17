@@ -1,9 +1,17 @@
+{% load static %}
+
 <nav>
     <ul class = "nav-menu" >
       <li class = "nav-item"><a class = "nav-link" href="/">Home</a></li>
-      <li class = "nav-item"><a class = "nav-link" href="/grafico/">Gráfico</a></li>
-      <li class = "nav-item"><a class = "nav-link" href="/create_view/">Colocar dados manualmente</a></li>
-      <li class = "nav-item"><a class = "nav-link" href="#">Login</a></li>
+      {% if user.is_authenticated %}
+        <li class = "nav-item"><a class = "nav-link" href="/grafico/">Gráfico</a></li>
+      {% endif %}
+      {% if user.is_authenticated %}
+        <li class = "nav-item"><a class = "nav-link" href="{% url 'logout' %}">Deslogar</a></li>
+      {% else %}
+        <li class = "nav-item"><a class = "nav-link" href="{% url 'login' %}">Logar</a></li>
+        <li class = "nav-item"><a class = "nav-link" href="{% url 'sign_in' %}">Criar Conta</a></li>
+      {% endif %}
     </ul>
   </nav>
   

@@ -1,0 +1,96 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="{% static 'css/user/login_style.css' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="shortcut icon"
+      href="{% static 'imgs/dpr.png' %}"
+      type="image/x-icon"
+    />
+    <title>Criar Conta</title>
+
+    <script>
+      function hidePassword() {
+        const passwordInput = document.getElementById("password");
+        const passwordEyeOpenIcon =
+          document.getElementById("pass-eye-icon-open");
+        const passwordEyeClosedIcon = document.getElementById(
+          "pass-eye-icon-closed"
+        );
+
+        const newType = passwordInput.type === "password" ? "text" : "password";
+        passwordInput.type = newType;
+
+        passwordEyeOpenIcon.classList.toggle("hidden", newType === "text");
+        passwordEyeClosedIcon.classList.toggle(
+          "hidden",
+          newType === "password"
+        );
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        localStorage.clear();
+      });
+    </script>
+  </head>
+  <body>
+    <div class = "body-login_container">
+    <div class="login-container">
+      <div class="inner-login-container">
+        <div class="pre-login">
+          <p class="login-msg">Criar Conta</p>
+          <p class="second-login-msg">
+            Bem-vindo a plataforma da Análise do ECG</span>
+          </p>
+        </div>
+        <form method="post" action="{% url 'handle_sign_in' %}">
+          {% csrf_token %}
+          <div class="login-info">
+            <label for="username">Nome do Usuário*</label>
+            <input type="text" name="username" id="username" required /><br />
+            <label for="password">Senha*</label>
+            <input type="password" name="password" id="password" required />
+            <div
+              id="password-eye"
+              class="pass-eye password"
+              onclick="hidePassword()"
+            >
+              <img
+                id="pass-eye-icon-open"
+                class="pass-eye-icon shown"
+                src="{% static 'images/icons/eye-off-outline.svg' %}"
+                alt="password is shown"
+              />
+
+              <img
+                id="pass-eye-icon-closed"
+                class="pass-eye-icon hidden"
+                src="{% static 'images/icons/eye-outline.svg' %}"
+                alt="password is shown"
+              />
+            </div>
+
+            <div class="container-error error-message">
+              {% if messages %} {% for message in messages %}
+              <p class="error-message">{{ message }}</p>
+              {% endfor %} {% endif %}
+            </div>
+
+            <button type="submit">Criar conta</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    </div>
+  </div>
+  </body>
+</html>
+
+{% endblock %}
