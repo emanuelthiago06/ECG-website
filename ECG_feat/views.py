@@ -88,6 +88,7 @@ def upload_file_view(request):
     if request.method == "POST":
         identifier = random.randint(1, 10000)
         file = request.FILES.get("file")
+        user = request.POST.get("user")
         v1 = []
         v2 = []
         v3 = []
