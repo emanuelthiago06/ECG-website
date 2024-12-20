@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ['*','172.18.0.1','0.0.0.0','bla-bla-bla.bla-bla-vla.com', '127.
 INSTALLED_APPS = [
     'rest_framework',
     'ECG_feat',
+    'user',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -52,7 +53,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'ECG_feat.urls'
+ROOT_URLCONF = 'mainproject.urls'
 
 TEMPLATES = [
     {
@@ -145,3 +146,8 @@ TEMPLATES = [
         },
     },
 ]
+
+#AUTH_USER_MODEL = 'ECG_feat.CustomUser'
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10 MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10 MB
