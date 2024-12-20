@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from django.core.files.storage import default_storage
 import csv
 import random
+from django.contrib.auth.models import User
 #from src.make_img_from_signal import generate_image_from_vcg
 import cv2
 
@@ -28,6 +29,8 @@ def create_view(request):
     return render(request, 'create_view.html', context)
 
 def grafico_hora(request):
+    current_user = request.user
+    user_id = current_user.id
 
     if request.method == 'POST' and 'clean_database' in request.POST:
         # Delete all objects in the model
@@ -36,24 +39,18 @@ def grafico_hora(request):
 
     ahora= datetime.now()
     data = []
+    data2 = []
+    data3 = []
     labels =[]
     titulo= "Ultimos 60 minutos"
-    #min = []
-    #max = []
-    #avg = []
     ultima_hora = ahora-timedelta(hours=1)
     queryset = ECG_models.objects.all()
-    #queryset = T_Vs_t.objects.all()[:1440] #1440 pts son las ultimas 24 hrs, considerando que la info se registra cada un min
 
     for maumau in queryset:
         data.append(maumau.amp)
         labels.append(str(maumau.data.strftime("%Y-%m-%d %H:%M")))
-    return render(request, 'grafico.html', {'labels': labels,'data': data})
+    return render(request, 'grafico.html', {'labels': labels,'data': data,'data2': data2,'data3': data3})
 
-
-################################
-
-################################FUNCIONA
 
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -88,7 +85,8 @@ def upload_file_view(request):
     if request.method == "POST":
         identifier = random.randint(1, 10000)
         file = request.FILES.get("file")
-        user = request.POST.get("user")
+        user_name = request.POST.get("user")
+        user = User.objects.filter(username=user_name)
         v1 = []
         v2 = []
         v3 = []
@@ -115,6 +113,7 @@ def upload_file_view(request):
                     amp_2 = column2,
                     amp_3 = column3,
                     data = time_now,
+                    user_id= user.id 
                 )
                 vcg_object.save()
                 # img = generate_image_from_vcg(v1,v2,v3)

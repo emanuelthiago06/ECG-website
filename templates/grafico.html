@@ -18,8 +18,16 @@
 
   <div class="charts">
 
-    <div id="chart-container" style="width: 60%; padding: 10px; height:500px">
+    <div id="chart-container" style="width: 30%; padding: 10px; height:500px">
         <canvas id="line"></canvas>
+    </div>
+
+    <div id="chart-container" style="width: 30%; padding: 10px; height:500px">
+        <canvas id="line2"></canvas>
+    </div>
+
+    <div id="chart-container" style="width: 30%; padding: 10px; height:500px">
+        <canvas id="line3"></canvas>
     </div>
     
   </div>
@@ -52,9 +60,57 @@
       }
   };
 
+  var config = {
+    type: 'line',
+    data: {
+        datasets: [{
+            data: {{ data|safe }},
+            borderColor: ["#51cfcf"],
+            fill: false,
+            lineTension: 0,
+            label: 'Amplitude',
+            pointHitRadius: 5,
+            showLine: true,
+        }],
+        labels: {{ labels|safe }}
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false // Permite ajuste personalizado
+    }
+};
+
+var config2 = {
+  type: 'line',
+  data: {
+      datasets: [{
+          data: {{ data2|safe }},
+          borderColor: ["#51cfcf"],
+          fill: false,
+          lineTension: 0,
+          label: 'Amplitude',
+          pointHitRadius: 5,
+          showLine: true,
+      }],
+      labels: {{ labels|safe }}
+  },
+  options: {
+      responsive: true,
+      maintainAspectRatio: false // Permite ajuste personalizado
+  }
+};
+
+  
+
   window.onload = function() {
       var ctx = document.getElementById('line').getContext('2d');
       window.myPie = new Chart(ctx, config);
+
+      var ctx2 = document.getElementById('line').getContext('2d');
+      window.myPie = new Chart(ctx2, config2);
+
+      var ctx3 = document.getElementById('line').getContext('2d');
+      window.myPie = new Chart(ctx3, config3);
   };
 </script>
 {% endblock %}
