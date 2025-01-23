@@ -1,50 +1,98 @@
-{% extends 'base.html' %}
-{% block title %}Grafico do ECG{% endblock title %}
+{% load static %}
 
-{% block content %}
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset = "utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale= , shrink-to-fit=no">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/graph.css' %}">
+        <title>Visualizador do ECG</title>
+    </head>
+    <body>
+        <nav>
+            {% include 'partials/navbar.html' %}
+        </nav>
 <h2>Visualizador do ECG</h2>
 
-<form method="post">
-  {% csrf_token %}
-  <button type="submit" name="clean_database">Clean Database</button>
-</form>
+    <form method="post">
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+        <button type="submit" name="clean_database">Clean Database</button>
+    </form>
 
-{% if message %}
-  <p>{{ message }}</p>
-{% endif %}
+    {% if message %}
+    <p class="message">{{ message }}</p>
+    {% endif %}
 
-<div style="display: flex; justify-content: space-between; align-items: flex-start;">
-  <!-- Bloco do Gráfico -->
+    <div class="main-container">
+        <!-- Bloco do Gráfico -->
 
-  <div class="charts">
+        <div id="info-container">
+          <h3>Status do paciente: {{pred}}</h3>
+      </div>
+        <div class="charts">
+            <div id="chart-container">
+                <p class="graph-title">Derivação 1</p>
+                <canvas id="graph_1"></canvas>
+            </div>
+            <div id="chart-container">
+                <p class="graph-title">Derivação 2</p>
+              <canvas id="graph_2"></canvas>
+          </div>
+          <div id="chart-container">
+            <p class="graph-title">Derivação 3</p>
+            <canvas id="graph_3"></canvas>
+        </div>
+        </div>
 
-    <div id="chart-container" style="width: 30%; padding: 10px; height:500px">
-        <canvas id="line"></canvas>
     </div>
 
-    <div id="chart-container" style="width: 30%; padding: 10px; height:500px">
-        <canvas id="line2"></canvas>
-    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script>
+      var config = {
+          type: 'line',
+          data: {
+              datasets: [{
+                  data: {{ data|safe }},
+                  borderColor: ["#51cfcf"],
+                  fill: false,
+                  lineTension: 0,
+                  label: 'Amplitude',
+                  pointHitRadius: 5,
+                  showLine: true,
+              }],
+              labels: {{ labels|safe }}
+          },
+          options: {
+              responsive: true,
+              maintainAspectRatio: false // Permite ajuste personalizado
+          }
+      };
 
-    <div id="chart-container" style="width: 30%; padding: 10px; height:500px">
-        <canvas id="line3"></canvas>
-    </div>
-    
-  </div>
+      var config2 = {
+        type: 'line',
+        data: {
+            datasets: [{
+                data: {{ data2|safe }},
+                borderColor: ["#51cfcf"],
+                fill: false,
+                lineTension: 0,
+                label: 'Amplitude',
+                pointHitRadius: 5,
+                showLine: true,
+            }],
+            labels: {{ labels|safe }}
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false // Permite ajuste personalizado
+        }
+    };
 
-  <!-- Bloco de Informações -->
-  <div id="info-container" style="width: 35%; padding: 10px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px;">
-      <h3>Status do Paciente: Saudável</h3>
-  </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-<script>
-  var config = {
+    var config3 = {
       type: 'line',
       data: {
           datasets: [{
-              data: {{ data|safe }},
+              data: {{ data3|safe }},
               borderColor: ["#51cfcf"],
               fill: false,
               lineTension: 0,
@@ -59,58 +107,18 @@
           maintainAspectRatio: false // Permite ajuste personalizado
       }
   };
-
-  var config = {
-    type: 'line',
-    data: {
-        datasets: [{
-            data: {{ data|safe }},
-            borderColor: ["#51cfcf"],
-            fill: false,
-            lineTension: 0,
-            label: 'Amplitude',
-            pointHitRadius: 5,
-            showLine: true,
-        }],
-        labels: {{ labels|safe }}
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false // Permite ajuste personalizado
-    }
-};
-
-var config2 = {
-  type: 'line',
-  data: {
-      datasets: [{
-          data: {{ data2|safe }},
-          borderColor: ["#51cfcf"],
-          fill: false,
-          lineTension: 0,
-          label: 'Amplitude',
-          pointHitRadius: 5,
-          showLine: true,
-      }],
-      labels: {{ labels|safe }}
-  },
-  options: {
-      responsive: true,
-      maintainAspectRatio: false // Permite ajuste personalizado
-  }
-};
-
-  
-
-  window.onload = function() {
-      var ctx = document.getElementById('line').getContext('2d');
-      window.myPie = new Chart(ctx, config);
-
-      var ctx2 = document.getElementById('line').getContext('2d');
-      window.myPie = new Chart(ctx2, config2);
-
-      var ctx3 = document.getElementById('line').getContext('2d');
-      window.myPie = new Chart(ctx3, config3);
-  };
-</script>
-{% endblock %}
+    
+      
+    
+      window.onload = function() {
+          var ctx = document.getElementById('graph_1').getContext('2d');
+          window.myPie = new Chart(ctx, config);
+    
+          var ctx2 = document.getElementById('graph_2').getContext('2d');
+          window.myPie = new Chart(ctx2, config2);
+    
+          var ctx3 = document.getElementById('graph_3').getContext('2d');
+          window.myPie = new Chart(ctx3, config3);
+      };
+    </script>
+  </body>
