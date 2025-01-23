@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -33,6 +33,8 @@ class vcg_model(models.Model):
     amp_2 = models.FloatField()
     amp_3 = models.FloatField()
     data = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
+    pred = models.FloatField(default=0.0)
     
     class Meta:
         ordering=['pk']
