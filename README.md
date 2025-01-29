@@ -1,7 +1,7 @@
 # ECG Viewer & Classifier  
 
 ## Descrição  
-Este projeto é um leitor, visualizador e classificador de eletrocardiogramas (ECG), capaz de detectar a presença de infarto do miocárdio. Ele combina tecnologias de IoT, Django e Inteligência Artificial para processar e analisar os sinais cardíacos de forma eficiente.  
+Este projeto foi desenvolvido como parte do **Assert IFPB - Projeto Ciclo 3** e consiste em um leitor, visualizador e classificador de eletrocardiogramas (ECG), capaz de detectar a presença de infarto do miocárdio. Ele combina tecnologias de IoT, Django e Inteligência Artificial para processar e analisar os sinais cardíacos de forma eficiente.  
 
 ## Tecnologias Utilizadas  
 - **IoT**: A ESP envia os dados do ECG via HTTP para a aplicação.  
